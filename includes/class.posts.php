@@ -145,6 +145,8 @@ class PageLinesPosts {
 		$wrap_start = ( $clip && $clip_row_start ) ? sprintf( '<div class="clip_box fix">' ) : '';
 		$wrap_end = ( $clip && $clip_row_end ) ? sprintf( '</div>' ) : '';
 
+
+
 		$post_args = array(
 			'header'		=> $this->post_header( $format ),
 			'entry'			=> $this->post_entry(),
@@ -157,7 +159,7 @@ class PageLinesPosts {
 		);
 
 		$post_args['markup-start'] = sprintf(
-			'%s<article class="%s" id="post-%s"><div class="%s"><div class="banner"></div>',
+			'%s<article class="%s" id="post-%s"><div class="%s">',
 			$post_args['wrap-start'],
 			$post_args['classes'],
 			$post->ID,
@@ -310,8 +312,8 @@ class PageLinesPosts {
 
 			$classes = 'post-meta fix ';
 			$classes .= ( ! $this->pagelines_show_thumb( $id ) ) ? 'post-nothumb ' : '';
-			$classes .= ( ! $this->pagelines_show_content( $id ) ) ? 'post-nocontent ' : ''; 
-			
+			$classes .= ( ! $this->pagelines_show_content( $id ) ) ? 'post-nocontent ' : '';
+
 			$title = sprintf( '<section class="bd post-title-section fix"><hgroup class="post-title fix">%s</hgroup>%s</section>', $this->pagelines_get_post_title( $format ), $this->pagelines_get_post_metabar( $format ) );
 
 			if( ( $excerpt_mode == 'left-excerpt' || $excerpt_mode == 'right-excerpt' ) && ! is_single() )
@@ -355,19 +357,11 @@ class PageLinesPosts {
 	 *
 	 * @return string the excerpt markup
 	 */
-	 
-	 
-	 
 	function post_excerpt_markup( $mode = '', $thumbnail = '' ) {
 
 		ob_start();
 
 		pagelines_register_hook( 'pagelines_loop_before_excerpt', 'theloop' ); // Hook
-		
-		if(get_field('cover_image')) {
-					echo '<a href="' . get_field('policy_brief') . '"><img class="cover-image pl-imageframe" src="' . get_field('cover_image') . '"/></a>';
-				}
-				
 
 		if($mode == 'left-excerpt' || $mode == 'right-excerpt')
 			printf( '<aside class="post-excerpt">%s %s</aside>', $thumbnail, get_the_excerpt() );
@@ -375,10 +369,7 @@ class PageLinesPosts {
 			printf( '<aside class="post-excerpt">%s</aside>', get_the_excerpt() );
 
 
-        
-
-
-		if(get_field('read_more_button') == true && !$this->pagelines_show_content( get_the_ID() )) // 'Continue Reading' link
+		if(pagelines_is_posts_page() && !$this->pagelines_show_content( get_the_ID() )) // 'Continue Reading' link
 			echo $this->get_continue_reading_link( get_the_ID() );
 
 		pagelines_register_hook( 'pagelines_loop_after_excerpt', 'theloop' ); // Hook
@@ -435,7 +426,7 @@ class PageLinesPosts {
         $output = ( 'top' == $mode ) ? sprintf( '<div class="full_img fix">%s</div>', $thumb_link ) : $thumb_link;
 
 		return apply_filters( 'pagelines_thumb_markup', $output, $mode, $format );
-		
+
 	}
 
 	/**

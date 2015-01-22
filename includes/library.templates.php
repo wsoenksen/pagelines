@@ -199,7 +199,7 @@ function pagelines_standard_sidebar($name, $description){
 	    'before_widget' => '<li id="%1$s" class="%2$s widget fix"><div class="widget-pad">',
 	    'after_widget' => '</div></li>',
 	    'before_title' => '<h3 class="widget-title">',
-	    'after_title' => '</h3><div class="banner-top"></div>'
+	    'after_title' => '</h3>'
 	);
 }
 
